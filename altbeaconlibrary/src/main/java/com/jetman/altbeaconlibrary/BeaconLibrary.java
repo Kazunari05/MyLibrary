@@ -34,6 +34,7 @@ import java.util.Collection;
 public class BeaconLibrary extends UnityPlayerActivity implements BeaconConsumer {
 
     private static final String TAG = BeaconLibrary.class.getSimpleName();
+    private Beacon[] BeaconArray;
 
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
     private static final String IBEACON_FORMAT = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24";
@@ -132,9 +133,11 @@ public class BeaconLibrary extends UnityPlayerActivity implements BeaconConsumer
         manager.setRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-
                 if (beacons != null) {
+                    int index =0;
                     for(Beacon beacon : beacons) {
+                        BeaconArray[index] = beacon;
+                        index++;
                         final String outStr = "UUID:" + beacon.getId1() + ", major:" + beacon.getId2() + ", minor:" + beacon.getId3() + ", Distance:" + beacon.getDistance() + ",RSSI" + beacon.getRssi() + ", TxPower" + beacon.getTxPower();
                         beaconInfoString = outStr;
                         BeaconLibrary.DebugLog(outStr);
@@ -154,6 +157,22 @@ public class BeaconLibrary extends UnityPlayerActivity implements BeaconConsumer
         } catch(RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    private String GetBeaconUUID(int index){
+        return BeaconArray[index].getId1().toString();
+    }
+
+    private String GetBeaconMajor(int index){
+        return BeaconArray[index].getId2().toString();
+    }
+
+    private String GetBeaconMinor(int index){
+        return BeaconArray[index].getId3().toString();
+    }
+
+    private int GetBeaconRssi(int index){
+        return BeaconArray[index].getRssi();
     }
 
 }
