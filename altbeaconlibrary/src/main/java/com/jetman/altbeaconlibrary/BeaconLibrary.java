@@ -95,18 +95,15 @@ public class BeaconLibrary extends UnityPlayerActivity implements BeaconConsumer
         manager = BeaconManager.getInstanceForApplication(activity.getApplicationContext());
         manager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(IBEACON_FORMAT));
 
-        //Toast.makeText(activity, "Hello world!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onBeaconServiceConnect() {
-        //Log.d(TAG, "onBeaconServiceConnect");
         BeaconLibrary.DebugLog("onBeaconServiceConnect()");
 
         manager.setMonitorNotifier(new MonitorNotifier() {
             @Override
             public void didEnterRegion(Region region) {
-                //Log.d(TAG, "didEnterRegion");
                 BeaconLibrary.DebugLog("didEnterRegion()");
 
                 try {
@@ -117,7 +114,6 @@ public class BeaconLibrary extends UnityPlayerActivity implements BeaconConsumer
             }
             @Override
             public void didExitRegion(Region region) {
-                //Log.d(TAG, "didExitRegion");
                 BeaconLibrary.DebugLog("didExitRegion()");
 
                 try {
@@ -141,7 +137,6 @@ public class BeaconLibrary extends UnityPlayerActivity implements BeaconConsumer
                     for(Beacon beacon : beacons) {
                         final String outStr = "UUID:" + beacon.getId1() + ", major:" + beacon.getId2() + ", minor:" + beacon.getId3() + ", Distance:" + beacon.getDistance() + ",RSSI" + beacon.getRssi() + ", TxPower" + beacon.getTxPower();
                         beaconInfoString = outStr;
-                        //Log.d(TAG, outStr);
                         BeaconLibrary.DebugLog(outStr);
 
                         runOnUiThread(new Runnable() {
